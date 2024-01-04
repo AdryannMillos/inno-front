@@ -56,7 +56,7 @@ function RegisterCard() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <label htmlFor="password">
+          <label htmlFor="password" className="password-label">
             {" "}
             Your password needs to have at least 8 digits, 1 number and a
             special character

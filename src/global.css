@@ -6,7 +6,7 @@ body,
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100svh;
+    height: 100%;
     width: 100%;
     background-color: #f0f0f0;
 }
@@ -68,7 +68,7 @@ button:hover {
     margin-bottom: 5px;
 }
 
-label {
+.password-label {
     font-size: 10px;
     color: #333;
     margin-bottom: 5px;
@@ -79,22 +79,27 @@ label {
     max-width: 1200px;
     padding: 20px;
     width: 100%;
-    max-width: 1200px;
+    height: auto;
 }
 
 .search-bar {
     margin-bottom: 20px;
     width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:first baseline;
+    align-items: center;
 }
 
 .search-bar input {
     width: 100%;
-    max-width: 500px;
+    max-width: 300px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 16px;
     outline: none;
+    margin: 5px;
 }
 
 .news-cards {
@@ -147,7 +152,27 @@ label {
     font-size: 14px;
 }
 
-.news-cards-container {
+/* .news-cards-container {
     height: 600px;
     overflow-y: auto;
-}
+} */
+
+.column-div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 336px;
+    max-height: 50px;
+  }
+  .column-div label{
+    padding-left: 10px;
+    font-size: 11px;
+  }
+  /* Responsive styles for smaller screens */
+  @media (max-width: 600px) {
+    .search-bar {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+  }
