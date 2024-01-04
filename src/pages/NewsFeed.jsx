@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import apiService from "../services/apiService";
+import { Link } from "react-router-dom";
 
 function NewsFeed() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,7 +12,7 @@ function NewsFeed() {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [manualPageInput, setManualPageInput] = useState("");
+  const [manualPageInput, setManualPageInput] = useState("1");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -78,11 +79,38 @@ function NewsFeed() {
     const parsedPage = parseInt(manualPageInput, 10);
     if (!isNaN(parsedPage) && parsedPage > 0 && parsedPage <= totalPages) {
       setCurrentPage(parsedPage);
+
+      const fetchData = async () => {
+        setLoading(true);
+        try {
+          const response = await apiService.get("/news", {
+            params: {
+              pageSize: 8,
+              search: searchTerm,
+              author,
+              source,
+              fromDate,
+              toDate,
+              page: parsedPage,
+            },
+          });
+          setNewsData(response[0].articles);
+          setTotalPages(response[0].totalPages);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchData();
+    }else{
+        alert("Invalid page number");
     }
   };
 
   return (
     <div className="news-page">
+        <button className="profile"><Link to="/profile">My profile</Link></button>
       <div className="search-bar">
         <input
           type="text"
@@ -122,8 +150,12 @@ function NewsFeed() {
             onChange={(e) => setToDate(e.target.value)}
           />
         </div>
-        <button onClick={fetchFilteredData}>Search</button>
-        <button onClick={ClearParams}>Clear Filters</button>
+        <div className="button-container">
+          <button onClick={fetchFilteredData}>Search</button>
+          <button className="clear" onClick={ClearParams}>
+            Clear Filters
+          </button>
+        </div>
       </div>
       <div className="news-cards-container">
         <div className="news-cards">
@@ -133,28 +165,31 @@ function NewsFeed() {
                 <img src={extractImageUrl(news.image_url)} alt={news.title} />
                 <h3>{news.title}</h3>
                 <p>{cleanAndTruncateContent(news.content, 100)}</p>
-                <a href={news.url} target="_blank" rel="noreferrer">
+                <p><a href={news.url} target="_blank" rel="noreferrer">
                   Read more
                 </a>
-                <p>{news.author}</p>
-                <p>{news.source}</p>
-                <p>{news.published_at}</p>
+                </p>
+                <p>Author: {news.author}</p>
+                <p>Source: {news.source}</p>
+                <p>Publish Date: {news.published_at}</p>
               </div>
             ))}
         </div>
-        {!loading && <div className="pagination">
-          <span>
-            Page {currentPage} of {totalPages}
-          </span>
-          <input
-            type="number"
-            value={manualPageInput}
-            onChange={(e) => setManualPageInput(e.target.value)}
-            min="1"
-            max={totalPages}
-          />
-          <button onClick={handleManualPageChange}>Go</button>
-        </div>}
+        {!loading && (
+          <div className="pagination">
+            <span>
+              Page {currentPage} of {totalPages}
+            </span>
+            <input
+              type="number"
+              value={manualPageInput}
+              onChange={(e) => setManualPageInput(e.target.value)}
+              min="1"
+              max={totalPages}
+            />
+            <button onClick={handleManualPageChange}>Visit</button>
+          </div>
+        )}
       </div>
     </div>
   );

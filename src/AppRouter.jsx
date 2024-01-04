@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { AuthProvider } from "./providers/AuthProvider";
 import NewsFeed from "./pages/NewsFeed";
+import Profile from "./pages/ProfilePage";
 
 const AppRouter = () => {
   return (
@@ -16,6 +17,14 @@ const AppRouter = () => {
           element={
             <AuthProvider>
               <NewsFeed />
+            </AuthProvider>
+          }
+        />
+         <Route
+          path="/profile"
+          element={
+            <AuthProvider>
+              <Profile />
             </AuthProvider>
           }
         />
