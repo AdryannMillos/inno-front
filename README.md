@@ -31,9 +31,10 @@ VITE_BASE_URL=your_base_url
 
     ```
    docker build -t news-aggregator .
-   docker run -p 80:80 news-aggregator
+   docker run -p 81:81 news-aggregator
     ```
+edit the env variable on the dockerfile to be the same as in the .env
 
-Open http://localhost:80 in your browser to view the application running in a Docker container.
+Open http://localhost:81 in your browser to view the application running in a Docker container.
 
 
