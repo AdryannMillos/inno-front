@@ -21,7 +21,13 @@ Make sure you have docker and docker-compose installed on your machine.
     cd inno-front
     ```
 
-3. Docker:
+3. Create a .env file
+ 
+Create a .env file in the project root based on the provided .env.example. Update the variables as needed.
+
+VITE_BASE_URL=your_base_url
+
+4. Docker:
 
     ```
    docker build -t news-aggregator .
@@ -30,7 +36,4 @@ Make sure you have docker and docker-compose installed on your machine.
 
 Open http://localhost:80 in your browser to view the application running in a Docker container.
 
-Environment Variables
-Create a .env file in the project root based on the provided .env.example. Update the variables as needed.
 
-VITE_BASE_URL=your_base_url
