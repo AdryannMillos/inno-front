@@ -1,20 +1,14 @@
 // AuthContext.js
-import { createContext, useContext, useEffect } from "react";
+import React, { createContext, useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import apiService from "../services/apiService";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  
-
-  useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    const isTokenValid = tokenIsValid(token);
-
-    if (!isTokenValid) {
-      logout();
-    }
-
-  }, []);
+  const [userId, setUserId] = useState(null);
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const tokenIsValid = (token) => {
     if (!token) {
@@ -30,10 +24,35 @@ export const AuthProvider = ({ children }) => {
     );
     const decodedToken = JSON.parse(jsonPayload);
 
-    return decodedToken.exp * 1000 > Date.now();
+    if (decodedToken.exp * 1000 > Date.now()) {
+      return decodedToken.sub;
+    }
+
+    return null;
   };
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const token = localStorage.getItem("accessToken");
+      const validatedUserId = tokenIsValid(token);
+      setLoading(true);
+      if (!validatedUserId) {
+        logout();
+      } else {
+        try {
+          const response = await apiService.get(`/users/${validatedUserId}`);
+          setUserData(response.user);
+          setUserId(validatedUserId);
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
 
+    fetchUserData();
+  }, []);
 
   const logout = () => {
     localStorage.removeItem("accessToken");
@@ -41,8 +60,15 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ logout }}>
-      {children}
+    <AuthContext.Provider value={{ userId, userData, loading }}>
+      {React.Children.map(children, (child) => {
+        return React.cloneElement(child, { userId, userData, loading });
+      })}
     </AuthContext.Provider>
   );
+};
+export default AuthContext;
+
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };

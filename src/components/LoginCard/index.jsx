@@ -18,14 +18,14 @@ function LoginCard() {
         password,
       });
 
-      alert("Welcome!");
       localStorage.setItem("accessToken", response);
-
+      alert("Welcome!");
       window.location.href = "/";
     } catch (error) {
       setError(error.response.data.message);
     } finally {
       setLoading(false);
+
     }
   };
 

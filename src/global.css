@@ -88,7 +88,7 @@ button:hover {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content:first baseline;
+    justify-content: first baseline;
     align-items: center;
 }
 
@@ -106,7 +106,7 @@ button:hover {
 .news-cards {
     display: flex;
     flex-wrap: wrap;
-    justify-content:first baseline;
+    justify-content: first baseline;
     width: 100%;
     gap: 20px;
 }
@@ -153,42 +153,40 @@ button:hover {
     font-size: 14px;
 }
 
-/* .news-cards-container {
-    height: 600px;
-    overflow-y: auto;
-} */
-
 .column-div {
     display: flex;
     flex-direction: column;
     width: 100%;
     max-width: 330px;
     max-height: 50px;
-  }
-  .column-div label{
+}
+
+.column-div label {
     padding-left: 10px;
     font-size: 11px;
-  }
-  /* Responsive styles for smaller screens */
-  @media (max-width: 720px) {
+}
+
+@media (max-width: 720px) {
     .search-bar {
-      flex-direction: column;
-      justify-content: center;
+        flex-direction: column;
+        justify-content: center;
         align-items: center;
     }
+
     .search-bar input {
         width: 100%;
         box-sizing: border-box;
     }
-    .column-div  {
+
+    .column-div {
         width: 100%;
         max-width: none;
         justify-content: center;
         align-items: center;
     }
-  }
+}
 
-  .button-container{
+.button-container {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -196,15 +194,15 @@ button:hover {
     margin-top: 10px;
     width: 100%;
     max-width: 330px;
-  }
+}
 
-  .news-page button{
+.news-page button {
     border-radius: 10px;
     max-width: 120px;
     width: 100%;
-  }
+}
 
-  .clear{
+.clear {
     background-color: #54545f;
     color: #fff;
     padding: 12px;
@@ -212,23 +210,49 @@ button:hover {
     cursor: pointer;
     font-size: 16px;
     margin: 5px;
-  }
+}
 
-  .clear:hover{
+.clear:hover {
     background-color: #007BFF;
     color: #fff;
-  }
+}
 
-  .pagination span{
+.pagination span {
     margin: 5px
-  }
+}
 
-  .profile{
+.profile {
     background-color: green;
 
-  }
+}
 
-    .profile a{
-        text-decoration: none;
-        color: #fff;
+.profile a {
+    text-decoration: none;
+    color: #fff;
+}
+
+
+.loading-spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-spinner {
+    border: 8px solid rgba(0, 0, 0, 0.3);
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
     }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
